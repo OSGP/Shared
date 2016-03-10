@@ -9,7 +9,7 @@ package com.alliander.osgp.dto.valueobjects.smartmetering;
 
 import java.io.Serializable;
 
-public class SmsDetailsDTO implements Serializable {
+public class SmsDetailsDto implements Serializable {
 
     private static final long serialVersionUID = -3638851916093320732L;
 
@@ -19,7 +19,7 @@ public class SmsDetailsDTO implements Serializable {
     private String smsMsgAttemptStatus;
     private String msgType;
 
-    public SmsDetailsDTO(final String deviceIdentification, final Long smsMsgId, final String status,
+    public SmsDetailsDto(final String deviceIdentification, final Long smsMsgId, final String status,
             final String smsMsgAttemptStatus, final String msgType) {
         this.deviceIdentification = deviceIdentification;
         this.smsMsgId = smsMsgId;
