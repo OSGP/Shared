@@ -19,7 +19,8 @@ public class SeasonProfileDto implements Comparable<SeasonProfileDto>, Serializa
 
     private WeekProfileDto weekProfile;
 
-    public SeasonProfileDto(final String seasonProfileName, final CosemDateTimeDto seasonStart, final WeekProfileDto weekProfile) {
+    public SeasonProfileDto(final String seasonProfileName, final CosemDateTimeDto seasonStart,
+            final WeekProfileDto weekProfile) {
         this.seasonProfileName = seasonProfileName;
         this.seasonStart = new CosemDateTimeDto(seasonStart);
         this.weekProfile = weekProfile;

@@ -32,8 +32,8 @@ public class WeekProfileDto implements Comparable<WeekProfileDto>, Serializable 
     private DayProfileDto sunday;
 
     public WeekProfileDto(final String weekProfileName, final DayProfileDto monday, final DayProfileDto tuesday,
-            final DayProfileDto wednesday, final DayProfileDto thursday, final DayProfileDto friday, final DayProfileDto saturday,
-            final DayProfileDto sunday) {
+            final DayProfileDto wednesday, final DayProfileDto thursday, final DayProfileDto friday,
+            final DayProfileDto saturday, final DayProfileDto sunday) {
         this.weekProfileName = weekProfileName;
         this.monday = monday;
         this.tuesday = tuesday;

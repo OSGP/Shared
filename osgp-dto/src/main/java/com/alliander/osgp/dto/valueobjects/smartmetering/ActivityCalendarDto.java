@@ -14,6 +14,10 @@ import java.util.List;
 
 public class ActivityCalendarDto implements Comparable<ActivityCalendarDto>, Serializable {
 
+    public void setSeasonProfileList(final List<SeasonProfileDto> seasonProfileList) {
+        this.seasonProfileList = seasonProfileList;
+    }
+
     private static final long serialVersionUID = -8278955482889960359L;
 
     private String calendarName;

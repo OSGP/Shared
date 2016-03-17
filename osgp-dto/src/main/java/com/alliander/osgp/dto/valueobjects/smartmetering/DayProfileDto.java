@@ -73,4 +73,8 @@ public class DayProfileDto implements Comparable<DayProfileDto>, Serializable {
         }
         return true;
     }
+
+    public void setDayProfileActionList(final List<DayProfileActionDto> dayProfileActionList) {
+        this.dayProfileActionList = dayProfileActionList;
+    }
 }

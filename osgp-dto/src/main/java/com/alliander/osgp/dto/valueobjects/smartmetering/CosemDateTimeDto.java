@@ -26,14 +26,15 @@ public class CosemDateTimeDto implements Serializable, Comparable<CosemDateTimeD
 
     public static final int DEVIATION_NOT_SPECIFIED = 0x8000;
 
-    private final CosemDateDto date;
-    private final CosemTimeDto time;
+    private CosemDateDto date;
+    private CosemTimeDto time;
 
-    private final int deviation;
+    private int deviation;
 
-    private final ClockStatusDto clockStatus;
+    private ClockStatusDto clockStatus;
 
-    public CosemDateTimeDto(final CosemDateDto date, final CosemTimeDto time, final int deviation, final ClockStatusDto clockStatus) {
+    public CosemDateTimeDto(final CosemDateDto date, final CosemTimeDto time, final int deviation,
+            final ClockStatusDto clockStatus) {
         Objects.requireNonNull(date, "date must not be null");
         Objects.requireNonNull(time, "time must not be null");
         Objects.requireNonNull(clockStatus, "clockStatus must not be null");
@@ -57,12 +58,14 @@ public class CosemDateTimeDto implements Serializable, Comparable<CosemDateTimeD
                 .getClockStatus());
     }
 
-    public CosemDateTimeDto(final LocalDate date, final LocalTime time, final int deviation, final ClockStatusDto clockStatus) {
+    public CosemDateTimeDto(final LocalDate date, final LocalTime time, final int deviation,
+            final ClockStatusDto clockStatus) {
         this(new CosemDateDto(date), new CosemTimeDto(time), deviation, clockStatus);
     }
 
     public CosemDateTimeDto(final LocalDate date, final LocalTime time, final int deviation) {
-        this(new CosemDateDto(date), new CosemTimeDto(time), deviation, new ClockStatusDto(ClockStatusDto.STATUS_NOT_SPECIFIED));
+        this(new CosemDateDto(date), new CosemTimeDto(time), deviation, new ClockStatusDto(
+                ClockStatusDto.STATUS_NOT_SPECIFIED));
     }
 
     public CosemDateTimeDto(final LocalDateTime dateTime, final int deviation, final ClockStatusDto clockStatus) {
@@ -160,11 +163,11 @@ public class CosemDateTimeDto implements Serializable, Comparable<CosemDateTimeD
     }
 
     /**
-     * Returns this {@link CosemDateTimeDto} as {@link DateTime} if the date, time
-     * and deviation are specified.
+     * Returns this {@link CosemDateTimeDto} as {@link DateTime} if the date,
+     * time and deviation are specified.
      *
-     * @return this {@link CosemDateTimeDto} as {@link DateTime}, or {@code null}
-     *         if not {@link #isDateTimeSpecified()}.
+     * @return this {@link CosemDateTimeDto} as {@link DateTime}, or
+     *         {@code null} if not {@link #isDateTimeSpecified()}.
      *
      * @see #isDateTimeSpecified()
      */
@@ -189,8 +192,8 @@ public class CosemDateTimeDto implements Serializable, Comparable<CosemDateTimeD
     }
 
     /**
-     * Returns this {@link CosemDateTimeDto} as {@link LocalDateTime} if the date
-     * and time are specified.
+     * Returns this {@link CosemDateTimeDto} as {@link LocalDateTime} if the
+     * date and time are specified.
      *
      * @return this {@link CosemDateTimeDto} as {@link LocalDateTime}, or
      *         {@code null} if not {@link #isLocalDateTimeSpecified()}.
@@ -227,8 +230,8 @@ public class CosemDateTimeDto implements Serializable, Comparable<CosemDateTimeD
      * Returns this {@link CosemDateTimeDto} as {@link LocalDate} if the date is
      * specified.
      *
-     * @return this {@link CosemDateTimeDto} as {@link LocalDate}, or {@code null}
-     *         if not {@link #isLocalDateSpecified()}.
+     * @return this {@link CosemDateTimeDto} as {@link LocalDate}, or
+     *         {@code null} if not {@link #isLocalDateSpecified()}.
      *
      * @see #isLocalDateSpecified()
      */
@@ -250,8 +253,8 @@ public class CosemDateTimeDto implements Serializable, Comparable<CosemDateTimeD
      * Returns this {@link CosemDateTimeDto} as {@link LocalTime} if the time is
      * specified.
      *
-     * @return this {@link CosemDateTimeDto} as {@link LocalTime}, or {@code null}
-     *         if not {@link #isLocalTimeSpecified()}.
+     * @return this {@link CosemDateTimeDto} as {@link LocalTime}, or
+     *         {@code null} if not {@link #isLocalTimeSpecified()}.
      *
      * @see #isLocalTimeSpecified()
      */

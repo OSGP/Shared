@@ -18,9 +18,9 @@ public class PushSetupAlarmDto implements Serializable {
     private static final long serialVersionUID = -3541154908239512383L;
 
     private final CosemObisCodeDto logicalName;
-    private final List<CosemObjectDefinitionDto> pushObjectList;
+    private List<CosemObjectDefinitionDto> pushObjectList;
     private final SendDestinationAndMethodDto sendDestinationAndMethod;
-    private final List<WindowElementDto> communicationWindow;
+    private List<WindowElementDto> communicationWindow;
     private final Integer randomisationStartInterval;
     private final Integer numberOfRetries;
     private final Integer repetitionDelay;
@@ -75,11 +75,13 @@ public class PushSetupAlarmDto implements Serializable {
             this.repetitionDelay = repetitionDelay;
             return this;
         }
+
     }
 
-    private PushSetupAlarmDto(final CosemObisCodeDto logicalName, final List<CosemObjectDefinitionDto> pushObjectList,
-            final SendDestinationAndMethodDto sendDestinationAndMethod, final List<WindowElementDto> communicationWindow,
-            final Integer randomisationStartInterval, final Integer numberOfRetries, final Integer repetitionDelay) {
+    public PushSetupAlarmDto(final CosemObisCodeDto logicalName, final List<CosemObjectDefinitionDto> pushObjectList,
+            final SendDestinationAndMethodDto sendDestinationAndMethod,
+            final List<WindowElementDto> communicationWindow, final Integer randomisationStartInterval,
+            final Integer numberOfRetries, final Integer repetitionDelay) {
         this.checkRandomisationStartInterval(randomisationStartInterval);
         this.checkNumberOfRetries(numberOfRetries);
         this.checkRepetitionDelay(repetitionDelay);
@@ -168,6 +170,10 @@ public class PushSetupAlarmDto implements Serializable {
         return new ArrayList<>(this.pushObjectList);
     }
 
+    public void setPushObjectList(final List<CosemObjectDefinitionDto> pushObjectList) {
+        this.pushObjectList = pushObjectList;
+    }
+
     public boolean hasSendDestinationAndMethod() {
         return this.sendDestinationAndMethod != null;
     }
@@ -185,6 +191,10 @@ public class PushSetupAlarmDto implements Serializable {
             return null;
         }
         return new ArrayList<>(this.communicationWindow);
+    }
+
+    public void setCommunicationWindow(final List<WindowElementDto> communicationWindow) {
+        this.communicationWindow = communicationWindow;
     }
 
     public boolean hasRandomisationStartInterval() {
