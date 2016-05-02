@@ -28,10 +28,10 @@ public class EventNotification implements Serializable {
      * Earlier constructor without the DateTime the event occurred. For lack of
      * a better default this will use {@code DateTime.now()} as the moment
      * registered with the event.
-     * <p>
-     * Use
-     * {@link #EventNotification(String, DateTime, EventType, String, Integer)}
-     * if the time the event occurred is known.
+     * 
+     * @deprecated Use
+     *             {@link #EventNotification(String, DateTime, EventType, String, Integer)}
+     *             if the time the event occurred is known.
      */
     @Deprecated
     public EventNotification(final String deviceUid, final EventType eventType, final String description,
