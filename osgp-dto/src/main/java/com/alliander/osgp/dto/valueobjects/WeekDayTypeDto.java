@@ -5,15 +5,10 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-package com.alliander.osgp.dto.valueobjects.smartmetering;
+package com.alliander.osgp.dto.valueobjects;
 
-public enum AmrProfileStatusCodeFlagDto {
+import java.io.Serializable;
 
-    CRITICAL_ERROR,
-    CLOCK_INVALID,
-    DATA_NOT_VALID,
-    DAYLIGHT_SAVING,
-    CLOCK_ADJUSTED,
-    POWER_DOWN;
-
+public enum WeekDayTypeDto implements Serializable {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY, WEEKDAY, WEEKEND, ABSOLUTEDAY, ALL;
 }
