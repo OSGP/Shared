@@ -16,6 +16,7 @@ public enum ComponentType {
     WS_PUBLIC_LIGHTING("Osgp Web Service Adapter Public Lighting"),
     WS_TARIFF_SWITCHING("Osgp Web Service Adapter Tariff Switching"),
     WS_SMART_METERING("Osgp Web Service Adapter Smart Metering"),
+    WS_MICROGRIDS("Osgp Web Service Adapter Microgrids"),
     DOMAIN_ADMIN("Osgp Domain Adapter Admin"),
     DOMAIN_CORE("Osgp Domain Adapter Core"),
     DOMAIN_PUBLIC_LIGHTING("Osgp Domain Adapter Public Lighting"),
