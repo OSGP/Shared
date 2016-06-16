@@ -22,6 +22,7 @@ public enum ComponentType {
     DOMAIN_PUBLIC_LIGHTING("Osgp Domain Adapter Public Lighting"),
     DOMAIN_TARIFF_SWITCHING("Osgp Domain Adapter Tariff Switching"),
     DOMAIN_SMART_METERING("Osgp Domain Adapter Smart Metering"),
+    DOMAIN_MICROGRIDS("Osgp Domain Adapter Microgrids"),
     OSGP_CORE("Osgp Core"),
     PROTOCOL_OSLP("Osgp Protocol Adapter OSLP"),
     PROTOCOL_DLMS("Osgp Protocol Adapter DLMS"),
