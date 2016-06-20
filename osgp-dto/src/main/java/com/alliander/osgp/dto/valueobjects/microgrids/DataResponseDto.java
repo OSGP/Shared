@@ -9,6 +9,10 @@ public class DataResponseDto implements Serializable {
 
     private List<MeasurementResultSystemIdentifierDto> measurementResultSystemIdentifiers;
 
+    public DataResponseDto(final List<MeasurementResultSystemIdentifierDto> measurementResultSystemIdentifiers) {
+        this.measurementResultSystemIdentifiers = measurementResultSystemIdentifiers;
+    }
+
     public List<MeasurementResultSystemIdentifierDto> getMeasurementResultSystemIdentifiers() {
         return this.measurementResultSystemIdentifiers;
     }
@@ -17,5 +21,4 @@ public class DataResponseDto implements Serializable {
             final List<MeasurementResultSystemIdentifierDto> measurementResultSystemIdentifiers) {
         this.measurementResultSystemIdentifiers = measurementResultSystemIdentifiers;
     }
-
 }

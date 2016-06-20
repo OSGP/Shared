@@ -10,6 +10,13 @@ public class SystemFilterDto extends SystemIdentifierDto implements Serializable
     private List<MeasurementFilterDto> measurementFilters;
     private boolean all;
 
+    public SystemFilterDto(final int id, final String systemType, final List<MeasurementFilterDto> measurementFilters,
+            final boolean all) {
+        super(id, systemType);
+        this.measurementFilters = measurementFilters;
+        this.all = all;
+    }
+
     public List<MeasurementFilterDto> getMeasurementFilters() {
         return this.measurementFilters;
     }

@@ -9,6 +9,11 @@ public class SystemIdentifierDto implements Serializable {
     private int id;
     private String systemType;
 
+    public SystemIdentifierDto(final int id, final String systemType) {
+        this.id = id;
+        this.systemType = systemType;
+    }
+
     public int getId() {
         return this.id;
     }

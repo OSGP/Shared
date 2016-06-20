@@ -9,6 +9,11 @@ public class MeasurementIdentifierDto implements Serializable {
     private int id;
     private String node;
 
+    public MeasurementIdentifierDto(final int id, final String node) {
+        this.id = id;
+        this.node = node;
+    }
+
     public int getId() {
         return this.id;
     }

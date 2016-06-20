@@ -10,6 +10,12 @@ public class MeasurementResultSystemIdentifierDto extends SystemIdentifierDto im
 
     private List<MeasurementDto> measurements;
 
+    public MeasurementResultSystemIdentifierDto(final int id, final String systemType,
+            final List<MeasurementDto> measurements) {
+        super(id, systemType);
+        this.measurements = measurements;
+    }
+
     public List<MeasurementDto> getMeasurements() {
         return Collections.unmodifiableList(this.measurements);
     }
@@ -17,5 +23,4 @@ public class MeasurementResultSystemIdentifierDto extends SystemIdentifierDto im
     public void setMeasurements(final List<MeasurementDto> measurements) {
         this.measurements = measurements;
     }
-
 }

@@ -12,6 +12,16 @@ public class MeasurementDto extends MeasurementIdentifierDto implements Serializ
     private DateTime time;
     private double value;
 
+    public MeasurementDto(final int id, final String node, final int qualifier, final DateTime time,
+            final double value) {
+        super(id, node);
+        this.qualifier = qualifier;
+        // this.time = time;
+        // TODO Disabled timestamps for testing
+        this.time = null;
+        this.value = value;
+    }
+
     public int getQualifier() {
         return this.qualifier;
     }

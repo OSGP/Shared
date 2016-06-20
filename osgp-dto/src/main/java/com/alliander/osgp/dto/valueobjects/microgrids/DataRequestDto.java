@@ -9,6 +9,11 @@ public class DataRequestDto implements Serializable {
 
     private List<SystemFilterDto> systemFilters;
 
+    public DataRequestDto(final List<SystemFilterDto> systemFilters) {
+        super();
+        this.systemFilters = systemFilters;
+    }
+
     public List<SystemFilterDto> getSystemFilters() {
         return this.systemFilters;
     }

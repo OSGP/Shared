@@ -8,6 +8,11 @@ public class MeasurementFilterDto extends MeasurementIdentifierDto implements Se
 
     private boolean all;
 
+    public MeasurementFilterDto(final int id, final String node, final boolean all) {
+        super(id, node);
+        this.all = all;
+    }
+
     public boolean isAll() {
         return this.all;
     }
