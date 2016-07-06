@@ -16,9 +16,7 @@ public class MeasurementDto extends MeasurementIdentifierDto implements Serializ
             final double value) {
         super(id, node);
         this.qualifier = qualifier;
-        // this.time = time;
-        // TODO Disabled timestamps for testing
-        this.time = null;
+        this.time = time;
         this.value = value;
     }
 
