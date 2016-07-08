@@ -64,5 +64,5 @@ public enum DeviceFunctionDto {
     HANDLE_BUNDLED_ACTIONS,
     GET_ASSOCIATION_LN_OBJECTS,
     GET_DATA,
-    SET_SETPOINTS;
+    SET_SETPOINT;
 }
