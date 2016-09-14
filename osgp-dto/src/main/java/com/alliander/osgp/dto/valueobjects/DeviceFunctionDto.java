@@ -8,7 +8,6 @@
 package com.alliander.osgp.dto.valueobjects;
 
 public enum DeviceFunctionDto {
-
     START_SELF_TEST,
     STOP_SELF_TEST,
     SET_LIGHT,
@@ -64,6 +63,8 @@ public enum DeviceFunctionDto {
     HANDLE_BUNDLED_ACTIONS,
     GET_ASSOCIATION_LN_OBJECTS,
     ACTIVATE_DEVICE,
+    COUPLE_MBUS_DEVICE,
+    DE_COUPLE_MBUS_DEVICE,
     GET_DATA,
     SET_SETPOINT;
 }
