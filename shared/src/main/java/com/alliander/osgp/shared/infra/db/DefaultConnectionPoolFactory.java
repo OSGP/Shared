@@ -11,7 +11,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 /**
- *
+ * Factory class which constructs a {@link HikariDataSource} instance.
  */
 public class DefaultConnectionPoolFactory {
 
@@ -93,22 +93,10 @@ public class DefaultConnectionPoolFactory {
         return new HikariDataSource(hikariConfig);
     }
 
-    // public static HikariDataSource getDefaultConnectionPool(final String
-    // driverClassName, final String jdbcUrl,
-    // final String username, final String password, final int maxPoolSize,
-    // final boolean isAutoCommit) {
-    // final HikariConfig hikariConfig = new HikariConfig();
-    //
-    // hikariConfig.setDriverClassName(driverClassName);
-    // hikariConfig.setJdbcUrl(jdbcUrl);
-    // hikariConfig.setUsername(username);
-    // hikariConfig.setPassword(password);
-    // hikariConfig.setMaximumPoolSize(maxPoolSize);
-    // hikariConfig.setAutoCommit(isAutoCommit);
-    //
-    // return new HikariDataSource(hikariConfig);
-    // }
-
+    /**
+     * Builder class which can construct an {@link DefaultConnectionPoolFactory}
+     * instance.}
+     */
     public static class Builder {
         private String driverClassName = "org.postgresql.Driver";
         private String protocol = "jdbc:postgresql://";
@@ -192,6 +180,5 @@ public class DefaultConnectionPoolFactory {
             factory.idleTimeout = this.idleTimeout;
             return factory;
         }
-
     }
 }
