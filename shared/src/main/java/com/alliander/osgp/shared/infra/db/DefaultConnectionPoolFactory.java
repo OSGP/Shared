@@ -104,7 +104,7 @@ public class DefaultConnectionPoolFactory {
         private int databasePort = 5432;
         private String databaseName = "";
         private String username = "";
-        private String password = "";
+        private String pw = "";
         private int minPoolSize = 1;
         private int maxPoolSize = 2;
         private boolean isAutoCommit = false;
@@ -141,7 +141,7 @@ public class DefaultConnectionPoolFactory {
         }
 
         public Builder withPassword(final String password) {
-            this.password = password;
+            this.pw = password;
             return this;
         }
 
@@ -173,7 +173,7 @@ public class DefaultConnectionPoolFactory {
             factory.databasePort = this.databasePort;
             factory.databaseName = this.databaseName;
             factory.username = this.username;
-            factory.password = this.password;
+            factory.password = this.pw;
             factory.minPoolSize = this.minPoolSize;
             factory.maxPoolSize = this.maxPoolSize;
             factory.isAutoCommit = this.isAutoCommit;
