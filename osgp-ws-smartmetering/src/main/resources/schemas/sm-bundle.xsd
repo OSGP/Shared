@@ -152,13 +152,6 @@
       </xsd:complexContent>
     </xsd:complexType>
   </xsd:element>
-  <xsd:element name="UpdateFirmwareRequest">
-    <xsd:complexType>
-      <xsd:complexContent>
-        <xsd:extension base="smconf:UpdateFirmwareRequestData"></xsd:extension>
-      </xsd:complexContent>
-    </xsd:complexType>
-  </xsd:element>
   <xsd:element name="GetSpecificAttributeValueRequest">
     <xsd:complexType>
       <xsd:complexContent>
@@ -209,7 +202,6 @@
         <xsd:element ref="tns:SynchronizeTimeRequest" />
         <xsd:element ref="tns:GetConfigurationRequest" />
         <xsd:element ref="tns:GetFirmwareVersionRequest" />
-        <xsd:element ref="tns:UpdateFirmwareRequest" />
         <xsd:element ref="tns:GetSpecificAttributeValueRequest" />
         <xsd:element ref="tns:SetKeysRequest" />
         <xsd:element ref="tns:GetAssociationLnObjectsRequest" />
@@ -322,13 +314,6 @@
       </xsd:complexContent>
     </xsd:complexType>
   </xsd:element>
-  <xsd:element name="UpdateFirmwareResponse">
-    <xsd:complexType>
-      <xsd:complexContent>
-        <xsd:extension base="smconf:UpdateFirmwareResponseData"></xsd:extension>
-      </xsd:complexContent>
-    </xsd:complexType>
-  </xsd:element>
   <xsd:element name="AssociationLnObjectsResponse">
     <xsd:complexType>
       <xsd:complexContent>
@@ -351,7 +336,6 @@
         <xsd:element ref="tns:PeriodicMeterReadsGasResponse" />
         <xsd:element ref="tns:GetConfigurationResponse" />
         <xsd:element ref="tns:GetFirmwareVersionResponse" />
-        <xsd:element ref="tns:UpdateFirmwareResponse" />
         <xsd:element ref="tns:AssociationLnObjectsResponse" />
       </xsd:choice>
     </xsd:sequence>
