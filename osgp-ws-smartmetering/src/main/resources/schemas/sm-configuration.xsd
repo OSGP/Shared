@@ -129,32 +129,6 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:complexType name="UpdateFirmwareRequestData">
-    <xsd:complexContent>
-      <xsd:extension base="common:Command">
-        <xsd:sequence>
-          <xsd:element name="FirmwareIdentification">
-            <xsd:simpleType>
-              <xsd:restriction base="xsd:normalizedString">
-                <xsd:minLength value="1" />
-                <xsd:maxLength value="255" />
-                <xsd:pattern value="[^ ]{0,255}" />
-              </xsd:restriction>
-            </xsd:simpleType>
-          </xsd:element>
-        </xsd:sequence>
-      </xsd:extension>
-    </xsd:complexContent>
-  </xsd:complexType>
-  <xsd:complexType name="UpdateFirmwareResponseData">
-    <xsd:complexContent>
-      <xsd:extension base="tns:GetFirmwareVersionResponseData">
-      </xsd:extension>
-    </xsd:complexContent>
-  </xsd:complexType>
-
-
-
   <xsd:complexType name="FirmwareVersion">
     <xsd:sequence>
       <xsd:element name="Version" type="xsd:string" />
