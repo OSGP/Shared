@@ -8,6 +8,8 @@
 package com.alliander.osgp.dto.valueobjects.microgrids;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import org.joda.time.DateTime;
 
@@ -15,9 +17,9 @@ public class MeasurementDto extends MeasurementIdentifierDto implements Serializ
 
     private static final long serialVersionUID = -6999340558343190220L;
 
-    private int qualifier;
-    private DateTime time;
-    private double value;
+    private final int qualifier;
+    private final DateTime time;
+    private final double value;
 
     public MeasurementDto(final int id, final String node, final int qualifier, final DateTime time,
             final double value) {
@@ -36,6 +38,9 @@ public class MeasurementDto extends MeasurementIdentifierDto implements Serializ
     }
 
     public double getValue() {
-        return this.value;
+        final DecimalFormat df = new DecimalFormat("#.#####");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        return Double.parseDouble(df.format(this.value));
     }
 }
