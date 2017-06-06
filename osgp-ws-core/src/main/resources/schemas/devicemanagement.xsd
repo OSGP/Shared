@@ -489,6 +489,7 @@
       <xsd:enumeration value="COMMON" />
       <xsd:enumeration value="PUBLIC_LIGHTING" />
       <xsd:enumeration value="TARIFF_SWITCHING" />
+      <xsd:enumeration value="SMART_METERING" />
     </xsd:restriction>
   </xsd:simpleType>
 
