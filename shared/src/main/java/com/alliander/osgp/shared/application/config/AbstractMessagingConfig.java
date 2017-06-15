@@ -22,21 +22,17 @@ import com.alliander.osgp.shared.application.config.jms.JmsConfigurationFactory;
 public abstract class AbstractMessagingConfig extends AbstractConfig {
 
     @Value("${jms.activemq.broker.url:tcp://localhost:61616}")
-    protected String activeMqBroker;
+    private String activeMqBroker;
 
     @Value("${jms.activemq.connection.pool.size:10}")
-    protected int connectionPoolSize;
+    private int connectionPoolSize;
 
     @Value("${jms.activemq.connection.pool.max.active.sessions:500}")
-    protected int maximumActiveSessionPerConnection;
+    private int maximumActiveSessionPerConnection;
 
     @Value("${jms.activemq.connection.queue.prefetch:1000}")
-    protected int queuePrefetch;
+    private int queuePrefetch;
 
-    /*
-     * Override the getters below, if you dont want the use the default setting
-     * from the properties file that start with: 'jms.activemq'
-     */
     protected String getActiveMQBroker() {
         return this.activeMqBroker;
     }
