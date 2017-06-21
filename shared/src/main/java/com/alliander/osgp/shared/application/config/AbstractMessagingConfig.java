@@ -8,6 +8,7 @@
 package com.alliander.osgp.shared.application.config;
 
 import org.apache.activemq.ActiveMQPrefetchPolicy;
+import org.apache.activemq.RedeliveryPolicy;
 import org.apache.activemq.broker.region.policy.RedeliveryPolicyMap;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.apache.activemq.spring.ActiveMQConnectionFactory;
@@ -78,7 +79,13 @@ public abstract class AbstractMessagingConfig extends AbstractConfig {
 
     @Bean
     protected RedeliveryPolicyMap redeliveryPolicyMap() {
-        return new RedeliveryPolicyMap();
+        final RedeliveryPolicyMap redeliveryPolicyMap = new RedeliveryPolicyMap();
+        redeliveryPolicyMap.setDefaultEntry(this.defaultRedeliveryPolicy());
+        return redeliveryPolicyMap;
     }
 
+    @Bean
+    public RedeliveryPolicy defaultRedeliveryPolicy() {
+        return new RedeliveryPolicy();
+    }
 }
