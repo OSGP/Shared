@@ -52,8 +52,8 @@ public class JmsConfigurationFactory {
      * @param redeliveryPolicyMap
      *            Created redelivery policy will be added to this map.
      */
-    public JmsConfigurationFactory(final Environment environment, final PooledConnectionFactory pooledConnectionFactory,
-            final RedeliveryPolicyMap redeliveryPolicyMap) {
+    public JmsConfigurationFactory(final Environment environment,
+            final PooledConnectionFactory pooledConnectionFactory, final RedeliveryPolicyMap redeliveryPolicyMap) {
         this.environment = environment;
         this.pooledConnectionFactory = pooledConnectionFactory;
         this.redeliveryPolicyMap = redeliveryPolicyMap;
@@ -79,8 +79,7 @@ public class JmsConfigurationFactory {
      *            The message listener to put on the queue.
      * @return JmsConfiguration containing created objects.
      */
-    public JmsConfiguration initializeConfiguration(final String propertyPrefix,
-            final MessageListener messageListener) {
+    public JmsConfiguration initializeConfiguration(final String propertyPrefix, final MessageListener messageListener) {
         return new JmsConfigurationCreator<>(propertyPrefix, messageListener).create();
     }
 
@@ -92,6 +91,12 @@ public class JmsConfigurationFactory {
     public JmsConfiguration initializeReceiveConfiguration(final String propertyPrefix,
             final MessageListener messageListener) {
         return new JmsConfigurationCreator<>(propertyPrefix, messageListener).createReceiveConfiguration();
+    }
+
+    public JmsConfiguration initializeReceiveConfiguration(final String propertyPrefix,
+            final MessageListener messageListener, final ActiveMQDestination replyToQueue) {
+        return new JmsConfigurationCreator<>(propertyPrefix, messageListener, replyToQueue)
+                .createReceiveConfiguration();
     }
 
     private class JmsConfigurationCreator<V> {
@@ -116,6 +121,13 @@ public class JmsConfigurationFactory {
         private final ActiveMQDestination destinationQueue;
 
         private final V messageListener;
+
+        public JmsConfigurationCreator(final String propertyPrefix, final V messageListener,
+                final ActiveMQDestination replyToQueue) {
+            this.propertyPrefix = propertyPrefix;
+            this.destinationQueue = replyToQueue;
+            this.messageListener = messageListener;
+        }
 
         public JmsConfigurationCreator(final String propertyPrefix, final V messageListener) {
             this.propertyPrefix = propertyPrefix;
@@ -153,12 +165,12 @@ public class JmsConfigurationFactory {
 
         private <T> T property(final String propertyName, final Class<T> targetType) {
             try {
-                T property = JmsConfigurationFactory.this.environment
-                        .getProperty(this.propertyPrefix + "." + propertyName, targetType);
+                LOGGER.info("Trying to find property {}.{}", this.propertyPrefix, propertyName);
+                T property = JmsConfigurationFactory.this.environment.getProperty(this.propertyPrefix + "."
+                        + propertyName, targetType);
 
                 if (property == null) {
-                    LOGGER.debug("Property {}.{} not found, trying default property.", this.propertyPrefix,
-                            propertyName);
+                    LOGGER.info("Property {}.{} not found, trying default property.", this.propertyPrefix, propertyName);
                     property = this.fallbackProperty(propertyName, targetType);
                 }
 
