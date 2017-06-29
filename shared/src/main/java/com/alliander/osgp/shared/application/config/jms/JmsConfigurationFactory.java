@@ -71,28 +71,58 @@ public class JmsConfigurationFactory {
     }
 
     /**
-     * Initialize configuration.
+     * Initialize configuration for JmsTemplate and MessageListenerContainer.
      *
      * @param propertyPrefix
      *            Prefix for all properties.
      * @param messageListener
-     *            The message listener to put on the queue.
+     *            The {@link MessageListener} to put on the queue.
      * @return JmsConfiguration containing created objects.
      */
     public JmsConfiguration initializeConfiguration(final String propertyPrefix, final MessageListener messageListener) {
         return new JmsConfigurationCreator<>(propertyPrefix, messageListener).create();
     }
 
+    /**
+     * Initialize configuration for MessageListenerContainer.
+     *
+     * @param propertyPrefix
+     *            Prefix for all properties.
+     * @param messageListener
+     *            The {@link SessionAwareMessageListener} to put on the queue.
+     * @return JmsConfiguration containing created objects.
+     */
     public JmsConfiguration initializeReceiveConfiguration(final String propertyPrefix,
             final SessionAwareMessageListener<Message> messageListener) {
         return new JmsConfigurationCreator<>(propertyPrefix, messageListener).createReceiveConfiguration();
     }
 
+    /**
+     * Initialize configuration for MessageListenerContainer.
+     *
+     * @param propertyPrefix
+     *            Prefix for all properties.
+     * @param messageListener
+     *            The {@link MessageListener} to put on the queue.
+     * @return JmsConfiguration containing created objects.
+     */
     public JmsConfiguration initializeReceiveConfiguration(final String propertyPrefix,
             final MessageListener messageListener) {
         return new JmsConfigurationCreator<>(propertyPrefix, messageListener).createReceiveConfiguration();
     }
 
+    /**
+     * Initialize configuration for MessageListenerContainer.
+     *
+     * @param propertyPrefix
+     *            Prefix for all properties.
+     * @param messageListener
+     *            The {@link MessageListener} to put on the queue.
+     * @param replyToQueue
+     *            {@link ActiveMQDestination} instance where reply messages
+     *            should be sent.
+     * @return JmsConfiguration containing created objects.
+     */
     public JmsConfiguration initializeReceiveConfiguration(final String propertyPrefix,
             final MessageListener messageListener, final ActiveMQDestination replyToQueue) {
         return new JmsConfigurationCreator<>(propertyPrefix, messageListener, replyToQueue)
