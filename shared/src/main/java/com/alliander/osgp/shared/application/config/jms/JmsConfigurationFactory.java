@@ -141,7 +141,6 @@ public class JmsConfigurationFactory {
         private static final String PROPERTY_REDELIVERY_DELAY = "redelivery.delay";
         private static final String PROPERTY_DELIVERY_PERSISTENT = "delivery.persistent";
         private static final String PROPERTY_TIME_TO_LIVE = "time.to.live";
-        private static final String PROPERTY_RECEIVE_TIMEOUT = "receive.timeout";
         private static final String PROPERTY_EXPLICIT_QOS_ENABLED = "explicit.qos.enabled";
         private static final String PROPERTY_QUEUE = "queue";
 
@@ -212,15 +211,7 @@ public class JmsConfigurationFactory {
             }
         }
 
-        @SuppressWarnings("unchecked")
         private <T> T fallbackProperty(final String propertyName, final Class<T> targetType) {
-            if (PROPERTY_RECEIVE_TIMEOUT.equals(propertyName)) {
-                /*
-                 * The property '*.revceive.timeout' is not part of the default
-                 * set of properties.
-                 */
-                return (T) this.defaultReceiveTimeoutValue();
-            }
             try {
                 return JmsConfigurationFactory.this.environment.getRequiredProperty(JMS_DEFAULT + "." + propertyName,
                         targetType);
@@ -231,17 +222,12 @@ public class JmsConfigurationFactory {
             }
         }
 
-        private Long defaultReceiveTimeoutValue() {
-            return 100L;
-        }
-
         private JmsTemplate jmsTemplate() {
             final JmsTemplate jmsTemplate = new JmsTemplate();
             jmsTemplate.setDefaultDestination(this.destinationQueue);
             jmsTemplate.setExplicitQosEnabled(this.property(PROPERTY_EXPLICIT_QOS_ENABLED, boolean.class));
             jmsTemplate.setTimeToLive(this.property(PROPERTY_TIME_TO_LIVE, long.class));
             jmsTemplate.setDeliveryPersistent(this.property(PROPERTY_DELIVERY_PERSISTENT, boolean.class));
-            jmsTemplate.setReceiveTimeout(this.property(PROPERTY_RECEIVE_TIMEOUT, long.class));
             jmsTemplate.setConnectionFactory(JmsConfigurationFactory.this.pooledConnectionFactory);
             return jmsTemplate;
         }
