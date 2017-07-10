@@ -212,7 +212,15 @@ public class JmsConfigurationFactory {
             }
         }
 
+        @SuppressWarnings("unchecked")
         private <T> T fallbackProperty(final String propertyName, final Class<T> targetType) {
+            if (PROPERTY_RECEIVE_TIMEOUT.equals(propertyName)) {
+                /*
+                 * The property '*.revceive.timeout' is not part of the default
+                 * set of properties.
+                 */
+                return (T) this.defaultReceiveTimeoutValue();
+            }
             try {
                 return JmsConfigurationFactory.this.environment.getRequiredProperty(JMS_DEFAULT + "." + propertyName,
                         targetType);
@@ -221,6 +229,10 @@ public class JmsConfigurationFactory {
                         propertyName);
                 throw e;
             }
+        }
+
+        private Long defaultReceiveTimeoutValue() {
+            return 100L;
         }
 
         private JmsTemplate jmsTemplate() {
