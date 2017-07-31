@@ -26,7 +26,7 @@ import org.springframework.core.env.PropertySource;
  */
 public abstract class AbstractConfig {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractConfig.class);
 
     /**
      * Qualifier to detect a class path type resource
@@ -51,7 +51,7 @@ public abstract class AbstractConfig {
 
     /**
      * Default implementation to resolve ${} values in annotations.
-     * 
+     *
      * @return static PropertySourcesPlaceholderConfigurer
      */
     @Bean
@@ -63,8 +63,11 @@ public abstract class AbstractConfig {
 
     /**
      * Special setter for Spring environment, which reorders the property
-     * sources in defined order (high to lowest priority): - environment config
-     * - local config files - global config files - classpath config files
+     * sources in defined order (high to lowest priority): 
+     * - environment config
+     * - local config files
+     * - global config files
+     * - classpath config files
      * 
      * @param configurableEnvironment
      *            Spring environment
