@@ -19,7 +19,7 @@ public class EventMessageDataResponseDto extends ActionResponseDto {
     private List<EventDto> events;
 
     public EventMessageDataResponseDto(final List<EventDto> events) {
-        super("Retrieved " + events.size() + " events");
+        super("Retrieved " + ((events == null) ? 0 : events.size()) + " events");
         this.events = events;
     }
 
