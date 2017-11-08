@@ -151,6 +151,12 @@
         minOccurs="0" maxOccurs="1" />
       <xsd:element name="OsgpPortNumber" type="xsd:int"
         minOccurs="0" maxOccurs="1" />
+      <xsd:element name="NtpIpAddress" type="tns:IPType"
+        minOccurs="0" maxOccurs="1" />
+      <xsd:element name="NtpEnabled" type="xsd:boolean"
+        minOccurs="0" maxOccurs="1" />
+      <xsd:element name="NtpSyncInterval" type="xsd:int"
+        minOccurs="0" maxOccurs="1" />
       <xsd:element name="TestButtonEnabled" type="xsd:boolean"
         minOccurs="0" maxOccurs="1" />
       <xsd:element name="AutomaticSummerTimingEnabled" type="xsd:boolean"

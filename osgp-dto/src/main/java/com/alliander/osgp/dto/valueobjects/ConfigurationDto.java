@@ -57,6 +57,12 @@ public class ConfigurationDto implements Serializable {
 
     private Integer osgpPortNumber;
 
+    private String ntpIpAddress;
+
+    private Boolean ntpEnabled;
+
+    private Integer ntpSyncInterval;
+
     private Boolean testButtonEnabled;
 
     private Boolean automaticSummerTimingEnabled;
@@ -208,6 +214,30 @@ public class ConfigurationDto implements Serializable {
 
     public void setOsgpPortNumber(final Integer osgpPortNumber) {
         this.osgpPortNumber = osgpPortNumber;
+    }
+
+    public String getNtpIpAddress() {
+        return this.ntpIpAddress;
+    }
+
+    public void setNtpIpAddress(final String ntpIpAddress) {
+        this.ntpIpAddress = ntpIpAddress;
+    }
+
+    public Boolean getNtpEnabled() {
+        return this.ntpEnabled;
+    }
+
+    public void setNtpEnabled(final Boolean ntpEnabled) {
+        this.ntpEnabled = ntpEnabled;
+    }
+
+    public Integer getNtpSyncInterval() {
+        return this.ntpSyncInterval;
+    }
+
+    public void setNtpSyncInterval(final Integer ntpSyncInterval) {
+        this.ntpSyncInterval = ntpSyncInterval;
     }
 
     public Boolean isTestButtonEnabled() {
