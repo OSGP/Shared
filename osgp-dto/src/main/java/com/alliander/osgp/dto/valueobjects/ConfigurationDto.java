@@ -23,7 +23,7 @@ public class ConfigurationDto implements Serializable {
 
     private final DaliConfigurationDto daliConfiguration;
 
-    private final RelayConfigurationDto relayConfiguration;
+    private RelayConfigurationDto relayConfiguration;
 
     private final Integer shortTermHistoryIntervalMinutes;
 
@@ -109,6 +109,10 @@ public class ConfigurationDto implements Serializable {
 
     public RelayConfigurationDto getRelayConfiguration() {
         return this.relayConfiguration;
+    }
+
+    public void setRelayConfiguration(final RelayConfigurationDto relayConfiguration) {
+        this.relayConfiguration = relayConfiguration;
     }
 
     public Integer getShortTermHistoryIntervalMinutes() {
