@@ -157,7 +157,7 @@
           </xsd:restriction>
         </xsd:simpleType>
       </xsd:element>        
-      <xsd:element name="NtpIpAddress" type="tns:IPType"
+      <xsd:element name="NtpHost" type="xsd:string"
         minOccurs="0" maxOccurs="1" />
       <xsd:element name="NtpEnabled" type="xsd:boolean"
         minOccurs="0" maxOccurs="1" />
