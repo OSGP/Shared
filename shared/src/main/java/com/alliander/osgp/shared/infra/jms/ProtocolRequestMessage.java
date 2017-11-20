@@ -22,38 +22,7 @@ public class ProtocolRequestMessage extends RequestMessage {
     private final boolean scheduled;
     private final int retryCount;
     private int messagePriority = MessagePriorityEnum.DEFAULT.getPriority();
-    private boolean bypassRetry;
-
-    /**
-     * Constructor with no scheduled flag and no messagePriority
-     *
-     * @deprecated use the Builder in stead. Too many arguments in constructor
-     */
-    @Deprecated
-    public ProtocolRequestMessage(final String domain, final String domainVersion, final String messageType,
-            final String correlationUid, final String organisationIdentification, final String deviceIdentification,
-            final String ipAddress, final Serializable request, final int retryCount) {
-        this(domain, domainVersion, messageType, correlationUid, organisationIdentification, deviceIdentification,
-                ipAddress, request, false, retryCount);
-    }
-
-    /**
-     * Constructor with scheduled flag and no messagePriority
-     *
-     * @deprecated use the Builder in stead. Too many arguments in constructor
-     */
-    @Deprecated
-    public ProtocolRequestMessage(final String domain, final String domainVersion, final String messageType,
-            final String correlationUid, final String organisationIdentification, final String deviceIdentification,
-            final String ipAddress, final Serializable request, final boolean scheduled, final int retryCount) {
-        super(correlationUid, organisationIdentification, deviceIdentification, ipAddress, request);
-        this.domain = domain;
-        this.domainVersion = domainVersion;
-        this.messageType = messageType;
-        this.messageData = request;
-        this.scheduled = scheduled;
-        this.retryCount = retryCount;
-    }
+    private final boolean bypassRetry;
 
     /**
      * Constructor with both a scheduled flag and a messagePriority. Only called
