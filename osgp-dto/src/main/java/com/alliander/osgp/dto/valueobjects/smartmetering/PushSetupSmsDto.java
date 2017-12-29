@@ -7,6 +7,8 @@
  */
 package com.alliander.osgp.dto.valueobjects.smartmetering;
 
+import java.util.List;
+
 public class PushSetupSmsDto extends AbstractPushSetupDto {
 
     private static final long serialVersionUID = -3541154908239512383L;
@@ -15,15 +17,18 @@ public class PushSetupSmsDto extends AbstractPushSetupDto {
 
         @Override
         public PushSetupSmsDto build() {
-            return new PushSetupSmsDto(this);
+            return new PushSetupSmsDto(this.logicalName, this.pushObjectList, this.sendDestinationAndMethod,
+                    this.communicationWindow, this.randomisationStartInterval, this.numberOfRetries,
+                    this.repetitionDelay);
         }
     }
 
-    public static Builder newBuilder() {
-        return new Builder();
-    }
+    public PushSetupSmsDto(final CosemObisCodeDto logicalName, final List<CosemObjectDefinitionDto> pushObjectList,
+            final SendDestinationAndMethodDto sendDestinationAndMethod,
+            final List<WindowElementDto> communicationWindow, final Integer randomisationStartInterval,
+            final Integer numberOfRetries, final Integer repetitionDelay) {
 
-    private PushSetupSmsDto(final Builder builder) {
-        super(builder);
+        super(logicalName, pushObjectList, sendDestinationAndMethod, communicationWindow, randomisationStartInterval,
+                numberOfRetries, repetitionDelay);
     }
 }
