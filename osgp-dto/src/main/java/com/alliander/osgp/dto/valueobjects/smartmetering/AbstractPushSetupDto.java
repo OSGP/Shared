@@ -10,7 +10,7 @@ package com.alliander.osgp.dto.valueobjects.smartmetering;
 import java.util.ArrayList;
 import java.util.List;
 
-class AbstractPushSetupDto implements ActionRequestDto {
+public class AbstractPushSetupDto implements ActionRequestDto {
     private static final long serialVersionUID = -1080411684155651756L;
     private static final char TAB_CHAR = '\t';
 
@@ -70,28 +70,26 @@ class AbstractPushSetupDto implements ActionRequestDto {
         }
     }
 
-    AbstractPushSetupDto(final CosemObisCodeDto logicalName, final List<CosemObjectDefinitionDto> pushObjectList,
-            final SendDestinationAndMethodDto sendDestinationAndMethod,
-            final List<WindowElementDto> communicationWindow, final Integer randomisationStartInterval,
-            final Integer numberOfRetries, final Integer repetitionDelay) {
-        this.checkRandomisationStartInterval(randomisationStartInterval);
-        this.checkNumberOfRetries(numberOfRetries);
-        this.checkRepetitionDelay(repetitionDelay);
-        this.logicalName = logicalName;
-        if (pushObjectList == null) {
+    protected AbstractPushSetupDto(final AbstractBuilder abstractBuilder) {
+
+        this.checkRandomisationStartInterval(abstractBuilder.randomisationStartInterval);
+        this.checkNumberOfRetries(abstractBuilder.numberOfRetries);
+        this.checkRepetitionDelay(abstractBuilder.repetitionDelay);
+        this.logicalName = abstractBuilder.logicalName;
+        if (abstractBuilder.pushObjectList == null) {
             this.pushObjectList = null;
         } else {
-            this.pushObjectList = new ArrayList<>(pushObjectList);
+            this.pushObjectList = new ArrayList<>(abstractBuilder.pushObjectList);
         }
-        this.sendDestinationAndMethod = sendDestinationAndMethod;
-        if (communicationWindow == null) {
+        this.sendDestinationAndMethod = abstractBuilder.sendDestinationAndMethod;
+        if (abstractBuilder.communicationWindow == null) {
             this.communicationWindow = null;
         } else {
-            this.communicationWindow = new ArrayList<>(communicationWindow);
+            this.communicationWindow = new ArrayList<>(abstractBuilder.communicationWindow);
         }
-        this.randomisationStartInterval = randomisationStartInterval;
-        this.numberOfRetries = numberOfRetries;
-        this.repetitionDelay = repetitionDelay;
+        this.randomisationStartInterval = abstractBuilder.randomisationStartInterval;
+        this.numberOfRetries = abstractBuilder.numberOfRetries;
+        this.repetitionDelay = abstractBuilder.repetitionDelay;
     }
 
     private void checkRandomisationStartInterval(final Integer randomisationStartInterval) {
