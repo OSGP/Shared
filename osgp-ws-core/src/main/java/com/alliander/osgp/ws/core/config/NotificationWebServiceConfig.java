@@ -1,3 +1,12 @@
+/**
+ * Copyright 2018 Smart Society Services B.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.alliander.osgp.ws.core.config;
 
 import org.springframework.context.annotation.Bean;
@@ -35,12 +44,12 @@ public class NotificationWebServiceConfig {
         return new SimpleXsdSchema(new ClassPathResource(COMMON_XSD_PATH));
     }
 
-    @Bean(name = "notification-wsdl")
-    public WsdlDefinition motificationWsdl() {
+    @Bean(name = "Notification")
+    public WsdlDefinition notificationWsdl() {
         return new SimpleWsdl11Definition(new ClassPathResource(NOTIFICATION_WSDL_PATH));
     }
 
-    @Bean(name = "notification-xsd")
+    @Bean(name = "notification")
     public SimpleXsdSchema notificationXsd() {
         return new SimpleXsdSchema(new ClassPathResource(NOTIFICATION_XSD_PATH));
     }

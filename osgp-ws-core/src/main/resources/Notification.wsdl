@@ -62,7 +62,7 @@
     <wsdl:port binding="tns:NotificationPortSoap11"
       name="NotificationPortSoap11">
       <soap:address
-        location="http://localhost:8080/web-api-net-management/soap/osgp/notificationService/" />
+        location="http://localhost:8080/context/soap/osgp/notificationService/" />
     </wsdl:port>
   </wsdl:service>
 
