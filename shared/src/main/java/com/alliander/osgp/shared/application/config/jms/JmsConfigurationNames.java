@@ -74,6 +74,8 @@ public class JmsConfigurationNames {
 
     public static final String JMS_PROTOCOL_LOG_ITEM_REQUESTS = "jms.protocol.log.item.requests";
 
+    public static final String JMS_SMARTMETERING_SHIPMENTFILE_REQUESTS = "jms.smartmetering.shipmentfile.requests";
+
     private JmsConfigurationNames() {
         // Empty private constructor to prevent creating an instance of this
         // utility class.
