@@ -49,7 +49,7 @@ public class NotificationWebServiceConfig {
         return new SimpleWsdl11Definition(new ClassPathResource(NOTIFICATION_WSDL_PATH));
     }
 
-    @Bean(name = "notification")
+    @Bean(name = "notification-ws-core")
     public SimpleXsdSchema notificationXsd() {
         return new SimpleXsdSchema(new ClassPathResource(NOTIFICATION_XSD_PATH));
     }
