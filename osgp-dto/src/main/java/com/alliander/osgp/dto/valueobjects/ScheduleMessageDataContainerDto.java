@@ -17,11 +17,30 @@ public class ScheduleMessageDataContainerDto implements Serializable {
      */
     private static final long serialVersionUID = 6516779611853805357L;
 
-    private List<ScheduleDto> scheduleList;
+    private final Short astronomicalSunriseOffset;
+    private final Short astronomicalSunsetOffset;
+
+    private final List<ScheduleDto> scheduleList;
+
     private PageInfoDto pageInfo;
 
     public ScheduleMessageDataContainerDto(final List<ScheduleDto> scheduleList) {
+        this(scheduleList, null, null);
+    }
+
+    public ScheduleMessageDataContainerDto(final List<ScheduleDto> scheduleList, final Short astronomicalSunriseOffset,
+            final Short astronomicalSunsetOffset) {
         this.scheduleList = scheduleList;
+        this.astronomicalSunriseOffset = astronomicalSunriseOffset;
+        this.astronomicalSunsetOffset = astronomicalSunsetOffset;
+    }
+
+    public Short getAstronomicalSunriseOffset() {
+        return this.astronomicalSunriseOffset;
+    }
+
+    public Short getAstronomicalSunsetOffset() {
+        return this.astronomicalSunsetOffset;
     }
 
     public List<ScheduleDto> getScheduleList() {
