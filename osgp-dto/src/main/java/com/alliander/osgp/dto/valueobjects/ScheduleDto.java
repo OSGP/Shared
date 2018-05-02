@@ -34,6 +34,7 @@ public class ScheduleDto implements Serializable {
         this.scheduleList = scheduleList;
         this.astronomicalSunriseOffset = astronomicalSunriseOffset;
         this.astronomicalSunsetOffset = astronomicalSunsetOffset;
+        this.setAstroOffsets = astronomicalSunriseOffset != null || astronomicalSunsetOffset != null;
     }
 
     public Short getAstronomicalSunriseOffset() {
