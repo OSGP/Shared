@@ -87,5 +87,4 @@ public class ScheduleDto implements Serializable {
         this.getConfigurationFirst = false;
         this.configuration = configuration;
     }
-
 }
