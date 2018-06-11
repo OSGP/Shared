@@ -11,6 +11,8 @@ import java.io.Serializable;
 
 public class ScheduleMessageDataContainerDto implements Serializable {
 
+    private static final long serialVersionUID = 3814430143612585535L;
+
     private ScheduleDto schedule;
     private ConfigurationDto configuration;
 
