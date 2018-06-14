@@ -43,15 +43,11 @@ public class ScheduleMessageDataContainerDto implements Serializable {
         return this.pageInfo;
     }
 
-    public void setPageInfo(final PageInfoDto pageInfo) {
-        this.pageInfo = pageInfo;
-    }
-
     public static class Builder {
         // Required parameter
         private ScheduleDto schedule;
 
-        // Option parameters with default values
+        // Optional parameters with default values
         private ConfigurationDto configuration = null;
         private ScheduleMessageTypeDto scheduleMessageType = ScheduleMessageTypeDto.SET_SCHEDULE;
         private PageInfoDto pageInfo = null;
