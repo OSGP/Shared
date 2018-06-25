@@ -457,7 +457,7 @@
       </wsdl:output>
     </wsdl:operation>
 
-   <wsdl:operation name="FindOrganisation">
+    <wsdl:operation name="FindOrganisation">
       <soap:operation soapAction="" />
       <wsdl:input name="FindOrganisationRequest">
         <soap:header message="tns:FindOrganisationHeader"

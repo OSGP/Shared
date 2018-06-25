@@ -19,6 +19,8 @@
   <xsd:element name="FindOrganisationRequest">
     <xsd:complexType>
       <xsd:sequence>
+        <xsd:element name="OrganisationIdentification" type="common:Identification"
+          minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
