@@ -9,12 +9,20 @@
   <xsd:element name="OrganisationIdentification" type="tns:Identification" />
   <xsd:element name="UserName" type="tns:Identification" />
   <xsd:element name="ApplicationName" type="tns:Identification" />
+  <xsd:element name="MessagePriority" type="tns:MessagePriority" />
 
   <xsd:simpleType name="Identification">
     <xsd:restriction base="xsd:normalizedString">
       <xsd:minLength value="1" />
       <xsd:maxLength value="40" />
       <xsd:pattern value="[^ ]{0,40}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="MessagePriority">
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="0" />
+      <xsd:maxInclusive value="9" />
     </xsd:restriction>
   </xsd:simpleType>
 
