@@ -54,6 +54,7 @@ public class DefaultWebServiceTemplateFactory implements WebserviceTemplateFacto
     private int maxConnectionsPerRoute;
     private int maxConnectionsTotal;
     private int connectionTimeout;
+    private CircuitBreaker circuitBreaker;
 
     private DefaultWebServiceTemplateFactory() {
         this.webServiceTemplates = new HashMap<>();
@@ -84,6 +85,7 @@ public class DefaultWebServiceTemplateFactory implements WebserviceTemplateFacto
         private int maxConnectionsPerRoute = 2;
         private int maxConnectionsTotal = 20;
         private int connectionTimeout = 120000;
+        private CircuitBreaker circuitBreaker;
 
         public Builder setApplicationName(final String applicationName) {
             this.applicationName = applicationName;
@@ -145,6 +147,11 @@ public class DefaultWebServiceTemplateFactory implements WebserviceTemplateFacto
             return this;
         }
 
+        public Builder setCircuitBreaker(final CircuitBreaker circuitBreaker) {
+            this.circuitBreaker = circuitBreaker;
+            return this;
+        }
+
         public DefaultWebServiceTemplateFactory build() {
             final DefaultWebServiceTemplateFactory webServiceTemplateFactory = new DefaultWebServiceTemplateFactory();
             webServiceTemplateFactory.marshaller = this.marshaller;
@@ -161,6 +168,7 @@ public class DefaultWebServiceTemplateFactory implements WebserviceTemplateFacto
             webServiceTemplateFactory.maxConnectionsPerRoute = this.maxConnectionsPerRoute;
             webServiceTemplateFactory.maxConnectionsTotal = this.maxConnectionsTotal;
             webServiceTemplateFactory.connectionTimeout = this.connectionTimeout;
+            webServiceTemplateFactory.circuitBreaker = this.circuitBreaker;
             return webServiceTemplateFactory;
         }
     }
@@ -218,9 +226,17 @@ public class DefaultWebServiceTemplateFactory implements WebserviceTemplateFacto
         webServiceTemplate.setMarshaller(this.marshaller);
         webServiceTemplate.setUnmarshaller(this.marshaller);
 
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] { OrganisationIdentificationClientInterceptor
+        final ClientInterceptor organisationIdentificationClientInterceptor = OrganisationIdentificationClientInterceptor
                 .newBuilder().withOrganisationIdentification(organisationIdentification).withUserName(userName)
-                .withApplicationName(applicationName).build() });
+                .withApplicationName(applicationName).build();
+
+        if (this.circuitBreaker != null) {
+            final ClientInterceptor circuitBreakerInterceptor = new CircuitBreakerInterceptor(this.circuitBreaker);
+            webServiceTemplate.setInterceptors(
+                    new ClientInterceptor[] { circuitBreakerInterceptor, organisationIdentificationClientInterceptor });
+        } else {
+            webServiceTemplate.setInterceptors(new ClientInterceptor[] { organisationIdentificationClientInterceptor });
+        }
 
         if (this.isSecurityEnabled) {
             try {
