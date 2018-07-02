@@ -11,7 +11,6 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 
@@ -57,8 +56,7 @@ public class CircuitBreakerInterceptor implements ClientInterceptor {
     }
 
     @Override
-    public void afterCompletion(final MessageContext messageContext, final Exception ex)
-            throws WebServiceClientException {
+    public void afterCompletion(final MessageContext messageContext, final Exception ex) {
         LOGGER.debug("In after completion.");
         if (ex != null && ex instanceof IOException) {
             // A communication error occurred, the destination might be down
