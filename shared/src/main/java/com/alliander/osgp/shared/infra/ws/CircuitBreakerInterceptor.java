@@ -58,7 +58,7 @@ public class CircuitBreakerInterceptor implements ClientInterceptor {
     @Override
     public void afterCompletion(final MessageContext messageContext, final Exception ex) {
         LOGGER.debug("In after completion.");
-        if (ex != null && ex instanceof IOException) {
+        if (ex instanceof IOException) {
             // A communication error occurred, the destination might be down
             LOGGER.warn("An IOException occurred, indicate failure to the circuit breaker.");
             this.circuitBreaker.markFailure();

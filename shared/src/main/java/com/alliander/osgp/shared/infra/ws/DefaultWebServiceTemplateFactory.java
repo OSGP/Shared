@@ -9,6 +9,7 @@ import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -230,13 +231,15 @@ public class DefaultWebServiceTemplateFactory implements WebserviceTemplateFacto
                 .newBuilder().withOrganisationIdentification(organisationIdentification).withUserName(userName)
                 .withApplicationName(applicationName).build();
 
+        final LinkedHashSet<ClientInterceptor> interceptors = new LinkedHashSet<>();
+        interceptors.add(organisationIdentificationClientInterceptor);
+
         if (this.circuitBreaker != null) {
             final ClientInterceptor circuitBreakerInterceptor = new CircuitBreakerInterceptor(this.circuitBreaker);
-            webServiceTemplate.setInterceptors(
-                    new ClientInterceptor[] { circuitBreakerInterceptor, organisationIdentificationClientInterceptor });
-        } else {
-            webServiceTemplate.setInterceptors(new ClientInterceptor[] { organisationIdentificationClientInterceptor });
+            interceptors.add(circuitBreakerInterceptor);
         }
+
+        webServiceTemplate.setInterceptors(interceptors.toArray(new ClientInterceptor[interceptors.size()]));
 
         if (this.isSecurityEnabled) {
             try {

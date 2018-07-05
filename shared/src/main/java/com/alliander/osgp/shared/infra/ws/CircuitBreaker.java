@@ -8,6 +8,8 @@
 package com.alliander.osgp.shared.infra.ws;
 
 import java.time.Instant;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +18,11 @@ import org.slf4j.LoggerFactory;
  * Circuit breaker class, which can OPEN and CLOSE a circuit. The circuit is
  * initially CLOSED.
  *
- * When the circuit is set to OPEN, it's for a certain duration. After the
- * duration, the circuit will CLOSE to indicate the process can make a new call
- * can be made. When the new call succeeds, the threshold will be reset to its
- * initial value. If the new call fails, the circuit will be set to OPEN and the
- * duration will be multiplied with a certain multiplier.
+ * After "threshold" number of failures, the circuit is set to OPEN for a
+ * certain duration. After the duration, the circuit will CLOSE to indicate the
+ * process can make a new call. When the new call succeeds, the threshold will
+ * be reset to its initial value. If the new call fails as well, the circuit
+ * will be set to OPEN and the duration will be multiplied with a multiplier.
  *
  * The duration for the OPEN status is bound to a maximum. When a duration is
  * multiplied, it will be maximized to that maximum.
@@ -42,20 +44,24 @@ public class CircuitBreaker {
 
     private Status status = Status.CLOSED;
 
-    private final short threshold;
+    private final int threshold;
     private final int initialDuration;
     private final int maximumDuration;
-    private final short multiplier;
+    private final int multiplier;
 
     private int currentDuration;
     private int countDown;
     private Instant closeCircuitInstant;
 
+    private final Lock lock;
+
     public static class Builder {
-        private short threshold = 3;
+        private static final String NEGATIVE_VALUE_ERROR_MESSAGE = "Value %d is illegal, because negative values for %s are not allowed";
+
+        private int threshold = 3;
         private int initialDuration = 15000;
         private int maximumDuration = 300000;
-        private short multiplier = 2;
+        private int multiplier = 2;
 
         public Builder() {
             // Empty constructor
@@ -68,7 +74,9 @@ public class CircuitBreaker {
          *            Number of failures before the circuit breaker opens.
          * @return the updated builder.
          */
-        public Builder withThreshold(final short threshold) {
+        public Builder withThreshold(final int threshold) {
+            this.checkValueNotNegative(threshold, "threshold");
+
             this.threshold = threshold;
             return this;
         }
@@ -82,6 +90,8 @@ public class CircuitBreaker {
          * @return the updated builder.
          */
         public Builder withInitialDuration(final int initialDuration) {
+            this.checkValueNotNegative(initialDuration, "initialDuration");
+
             this.initialDuration = initialDuration;
             return this;
         }
@@ -95,6 +105,8 @@ public class CircuitBreaker {
          * @return the updated builder.
          */
         public Builder withMaximumDuration(final int maximumDuration) {
+            this.checkValueNotNegative(maximumDuration, "maximumDuration");
+
             this.maximumDuration = maximumDuration;
             return this;
         }
@@ -107,9 +119,17 @@ public class CircuitBreaker {
          *            while the circuit breaker is half open.
          * @return the updated builder.
          */
-        public Builder withMultiplier(final short multiplier) {
+        public Builder withMultiplier(final int multiplier) {
+            this.checkValueNotNegative(multiplier, "multiplier");
+
             this.multiplier = multiplier;
             return this;
+        }
+
+        private void checkValueNotNegative(final int value, final String fieldName) {
+            if (value < 0) {
+                throw new IllegalArgumentException(String.format(NEGATIVE_VALUE_ERROR_MESSAGE, value, fieldName));
+            }
         }
 
         public CircuitBreaker build() {
@@ -133,98 +153,120 @@ public class CircuitBreaker {
 
         this.countDown = this.threshold;
         this.currentDuration = this.initialDuration;
+
+        this.lock = new ReentrantLock();
     }
 
     /**
      * Opens the circuit.
      */
-    public synchronized void openCircuit() {
-        if (this.status == Status.CLOSED || this.status == Status.HALF_OPEN) {
-            LOGGER.warn("OPEN circuit, which is currently {}", this.status);
-            this.countDown = 0;
+    public void openCircuit() {
 
-            if (this.status == Status.HALF_OPEN) {
-                this.currentDuration = Math.min(this.currentDuration * this.multiplier, this.maximumDuration);
+        this.lock.lock();
+        try {
+            if (this.status != Status.OPEN) {
+                LOGGER.warn("OPEN circuit, which is currently {}", this.status);
+                this.countDown = 0;
+
+                if (this.status == Status.HALF_OPEN) {
+                    this.currentDuration = Math.min(this.currentDuration * this.multiplier, this.maximumDuration);
+                }
+
+                LOGGER.info("Period during which the circuit breaker will be open in milliseconds: {}",
+                        this.currentDuration);
+                this.status = Status.OPEN;
+                this.closeCircuitInstant = Instant.now().plusMillis(this.currentDuration);
             }
-
-            LOGGER.info("Period during which the circuit breaker will be open in milliseconds: {}",
-                    this.currentDuration);
-            this.status = Status.OPEN;
-            this.closeCircuitInstant = Instant.now().plusMillis(this.currentDuration);
+        } finally {
+            this.lock.unlock();
         }
     }
 
     /**
-     * Closes the circuit.
+     * Closes the circuit and resets the failure countdown to its initial
+     * threshold value.
      */
-    public synchronized void closeCircuit() {
-        if (this.status == Status.OPEN || this.status == Status.HALF_OPEN) {
-            LOGGER.info("Close circuit");
+    public void closeCircuit() {
+        this.lock.lock();
+        try {
             this.countDown = this.threshold;
-            this.currentDuration = this.initialDuration;
-            this.status = Status.CLOSED;
-            this.closeCircuitInstant = null;
-        } else {
-            this.countDown = this.threshold;
+
+            if (this.status != Status.CLOSED) {
+                LOGGER.info("Close circuit");
+                this.currentDuration = this.initialDuration;
+                this.status = Status.CLOSED;
+                this.closeCircuitInstant = null;
+            }
+        } finally {
+            this.lock.unlock();
         }
     }
 
     /**
-     * Half opens the circuit. This is an intermediate state. If the next call
-     * fails, the circuit will open. If the next call succeeds, the circuit will
-     * close.
+     * Half opens the circuit. This is an internal intermediate state. If the
+     * next call fails, the circuit will open. If the next call succeeds, the
+     * circuit will close.
      */
-    private synchronized void halfOpenCircuit() {
-        if (this.status == Status.OPEN) {
-            LOGGER.warn("Set circuit, which is currently OPEN, to HALF_OPEN");
-            this.status = Status.HALF_OPEN;
-            this.countDown = 1;
-            this.closeCircuitInstant = null;
-        } else {
-            throw new IllegalStateException("It's not allowed to transition from CLOSED to HALF_OPEN");
+    private void halfOpenCircuit() {
+        this.lock.lock();
+        try {
+            if (this.status != Status.CLOSED) {
+                LOGGER.warn("Set circuit, which is currently {}, to HALF_OPEN", this.status);
+                this.status = Status.HALF_OPEN;
+                this.countDown = 1;
+                this.closeCircuitInstant = null;
+            } else {
+                throw new IllegalStateException("It's not allowed to transition from CLOSED to HALF_OPEN");
+            }
+        } finally {
+            this.lock.unlock();
         }
-    }
-
-    private synchronized Status updateAndGetStatus() {
-        if (this.status == Status.OPEN && Instant.now().isAfter(this.closeCircuitInstant)) {
-            LOGGER.info("Timeout expired for OPEN circuit");
-            this.halfOpenCircuit();
-        }
-
-        return this.status == Status.HALF_OPEN ? Status.CLOSED : this.status;
     }
 
     public boolean isClosed() {
         final Status currentStatus = this.updateAndGetStatus();
-        return currentStatus == Status.CLOSED;
+
+        return currentStatus != Status.OPEN;
     }
 
-    public synchronized void markSuccess() {
+    private Status updateAndGetStatus() {
+        this.lock.lock();
+        try {
+
+            if (this.status == Status.OPEN && Instant.now().isAfter(this.closeCircuitInstant)) {
+                LOGGER.info("Timeout expired for OPEN circuit");
+                this.halfOpenCircuit();
+            }
+
+            return this.status;
+        } finally {
+            this.lock.unlock();
+        }
+    }
+
+    public void markSuccess() {
         this.closeCircuit();
     }
 
-    public synchronized void markFailure() {
-        final Status currentStatus = this.updateAndGetStatus();
-        switch (currentStatus) {
-        case CLOSED:
+    public void markFailure() {
+        final boolean isCurrentlyClosed = this.isClosed();
+        if (isCurrentlyClosed) {
             this.processFailureWhenClosed();
-            break;
-        case HALF_OPEN:
-            this.openCircuit();
-            break;
-        case OPEN:
+        } else {
             LOGGER.debug("New failure. No action needed, circuit already open.");
-            break;
-        default:
-            break;
         }
     }
 
     private void processFailureWhenClosed() {
-        this.countDown--;
-        LOGGER.warn("Failure occurred. Decreased countDown value for circuit breaker to {}", this.countDown);
-        if (this.countDown == 0) {
-            this.openCircuit();
+        this.lock.lock();
+        try {
+            this.countDown--;
+            LOGGER.warn("Failure occurred. Decreased countDown value for circuit breaker to {}", this.countDown);
+            if (this.countDown == 0) {
+                this.openCircuit();
+            }
+        } finally {
+            this.lock.unlock();
         }
     }
 }

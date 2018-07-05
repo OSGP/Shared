@@ -17,8 +17,70 @@ public class CircuitBreakerTest {
 
     @Before
     public void before() {
-        this.circuitBreaker = new CircuitBreaker.Builder().withThreshold((short) 2).withInitialDuration(30)
-                .withMaximumDuration(120).withMultiplier((short) 3).build();
+        this.circuitBreaker = new CircuitBreaker.Builder().withThreshold(2).withInitialDuration(30)
+                .withMaximumDuration(120).withMultiplier(3).build();
+    }
+
+    @Test
+    public void testNegativeThreshold() {
+        try {
+            new CircuitBreaker.Builder().withThreshold(-1).build();
+            this.failIllegalArgument("threshold");
+        } catch (final IllegalArgumentException e) {
+            this.checkIllegalArgumentExceptionMessage(e);
+        }
+    }
+
+    @Test
+    public void testNegativeInitialDuration() {
+        try {
+            new CircuitBreaker.Builder().withInitialDuration(-1).build();
+            this.failIllegalArgument("initialDuration");
+        } catch (final IllegalArgumentException e) {
+            this.checkIllegalArgumentExceptionMessage(e);
+        }
+    }
+
+    @Test
+    public void testNegativeMaximumDuration() {
+        try {
+            new CircuitBreaker.Builder().withMaximumDuration(-1).build();
+            this.failIllegalArgument("maximumDuration");
+        } catch (final IllegalArgumentException e) {
+            this.checkIllegalArgumentExceptionMessage(e);
+        }
+    }
+
+    @Test
+    public void testNegativeMultiplier() {
+        try {
+            new CircuitBreaker.Builder().withMultiplier(-1).build();
+            this.failIllegalArgument("multiplier");
+        } catch (final IllegalArgumentException e) {
+            this.checkIllegalArgumentExceptionMessage(e);
+        }
+    }
+
+    @Test
+    public void testZeroValues() {
+        try {
+            new CircuitBreaker.Builder().withThreshold(0).withInitialDuration(0).withMaximumDuration(0)
+                    .withMultiplier(0).build();
+        } catch (final Exception e) {
+            Assert.fail("Exception should not occur for valid build call");
+        }
+    }
+
+    private void failIllegalArgument(final String fieldName) {
+        Assert.fail(String.format("CircuitBreaker should not have been created because of an illegal value for [%s]",
+                fieldName));
+    }
+
+    private void checkIllegalArgumentExceptionMessage(final IllegalArgumentException e) {
+        // Checks an essential part of the error message instead
+        // of the exact full text.
+        final String exceptionMessage = e.getMessage();
+        Assert.assertTrue(exceptionMessage.contains("negative value"));
     }
 
     @Test
