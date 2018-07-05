@@ -8,8 +8,9 @@ import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -231,7 +232,7 @@ public class DefaultWebServiceTemplateFactory implements WebserviceTemplateFacto
                 .newBuilder().withOrganisationIdentification(organisationIdentification).withUserName(userName)
                 .withApplicationName(applicationName).build();
 
-        final LinkedHashSet<ClientInterceptor> interceptors = new LinkedHashSet<>();
+        final List<ClientInterceptor> interceptors = new ArrayList<>();
         interceptors.add(organisationIdentificationClientInterceptor);
 
         if (this.circuitBreaker != null) {
