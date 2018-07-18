@@ -154,9 +154,9 @@ public class CircuitBreakerTest {
         this.markFailure();
         // Wait longer then the initial duration, but shorter than
         // multiplier * initial duration.
-        this.wait(300);
+        this.wait(100);
 
-        Assert.assertFalse("Status should be OPEN after waiting for 300 ms", this.circuitBreaker.isClosed());
+        Assert.assertFalse("Status should be OPEN after waiting for 100 ms", this.circuitBreaker.isClosed());
     }
 
     @Test
