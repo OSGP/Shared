@@ -7,6 +7,8 @@
  */
 package org.opensmartgridplatform.shared.application.config;
 
+import javax.sql.DataSource;
+
 import org.quartz.Job;
 
 public class SchedulingConfigProperties {
@@ -18,6 +20,7 @@ public class SchedulingConfigProperties {
     private final String jobStoreDbUsername;
     private final String jobStoreDbPassword;
     private final String jobStoreDbDriver;
+    private final DataSource dataSource;
 
     private SchedulingConfigProperties(final Builder builder) {
         this.jobClass = builder.jobClass;
@@ -27,6 +30,7 @@ public class SchedulingConfigProperties {
         this.jobStoreDbUsername = builder.jobStoreDbUsername;
         this.jobStoreDbPassword = builder.jobStoreDbPassword;
         this.jobStoreDbDriver = builder.jobStoreDbDriver;
+        this.dataSource = builder.dataSource;
     }
 
     public static class Builder {
@@ -38,6 +42,7 @@ public class SchedulingConfigProperties {
         private String jobStoreDbUsername = null;
         private String jobStoreDbPassword = null;
         private String jobStoreDbDriver = null;
+        private DataSource dataSource = null;
 
         public SchedulingConfigProperties build() {
             return new SchedulingConfigProperties(this);
@@ -77,6 +82,11 @@ public class SchedulingConfigProperties {
             this.jobStoreDbDriver = jobStoreDbDriver;
             return this;
         }
+
+        public Builder withDataSource(final DataSource dataSource) {
+            this.dataSource = dataSource;
+            return this;
+        }
     }
 
     public static Builder newBuilder() {
@@ -109,6 +119,10 @@ public class SchedulingConfigProperties {
 
     public String getJobStoreDbDriver() {
         return this.jobStoreDbDriver;
+    }
+
+    public DataSource getDataSource() {
+        return this.dataSource;
     }
 
 }
