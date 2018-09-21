@@ -7,11 +7,11 @@
  */
 package org.opensmartgridplatform.shared.application.config;
 
-import javax.sql.DataSource;
-
 import org.quartz.Job;
 
 public class SchedulingConfigProperties {
+
+    private static final String DEFAULT_MAX_CONNECTIONS = "10";
 
     private final Class<? extends Job> jobClass;
     private final String threadCountKey;
@@ -20,7 +20,7 @@ public class SchedulingConfigProperties {
     private final String jobStoreDbUsername;
     private final String jobStoreDbPassword;
     private final String jobStoreDbDriver;
-    private final DataSource dataSource;
+    private final String maxConnections;
 
     private SchedulingConfigProperties(final Builder builder) {
         this.jobClass = builder.jobClass;
@@ -30,7 +30,7 @@ public class SchedulingConfigProperties {
         this.jobStoreDbUsername = builder.jobStoreDbUsername;
         this.jobStoreDbPassword = builder.jobStoreDbPassword;
         this.jobStoreDbDriver = builder.jobStoreDbDriver;
-        this.dataSource = builder.dataSource;
+        this.maxConnections = builder.maxConnections;
     }
 
     public static class Builder {
@@ -42,7 +42,7 @@ public class SchedulingConfigProperties {
         private String jobStoreDbUsername = null;
         private String jobStoreDbPassword = null;
         private String jobStoreDbDriver = null;
-        private DataSource dataSource = null;
+        private String maxConnections = DEFAULT_MAX_CONNECTIONS;
 
         public SchedulingConfigProperties build() {
             return new SchedulingConfigProperties(this);
@@ -83,8 +83,8 @@ public class SchedulingConfigProperties {
             return this;
         }
 
-        public Builder withDataSource(final DataSource dataSource) {
-            this.dataSource = dataSource;
+        public Builder withMaxConnections(final String maxConnections) {
+            this.maxConnections = maxConnections;
             return this;
         }
     }
@@ -121,8 +121,8 @@ public class SchedulingConfigProperties {
         return this.jobStoreDbDriver;
     }
 
-    public DataSource getDataSource() {
-        return this.dataSource;
+    public String getMaxConnections() {
+        return this.maxConnections;
     }
 
 }
