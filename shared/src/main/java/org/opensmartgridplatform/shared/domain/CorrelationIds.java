@@ -2,7 +2,7 @@ package org.opensmartgridplatform.shared.domain;
 
 /**
  * Set of ID's used to track things like device operations passing through the platform,
- * i.e. the organisation identification, the device identification and the Thcorrelation UID.
+ * i.e. the organisation identification, the device identification and the correlation UID.
  */
 public class CorrelationIds {
     private final String organisationIdentification;
