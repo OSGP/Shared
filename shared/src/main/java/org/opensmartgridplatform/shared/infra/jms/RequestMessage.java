@@ -9,8 +9,6 @@ package org.opensmartgridplatform.shared.infra.jms;
 
 import java.io.Serializable;
 
-import org.opensmartgridplatform.shared.domain.CorrelationIds;
-
 public class RequestMessage implements Serializable {
 
     /**

@@ -1,4 +1,4 @@
-package org.opensmartgridplatform.shared.domain;
+package org.opensmartgridplatform.shared.infra.jms;
 
 /**
  * Set of ID's used to track things like device operations passing through the platform,
