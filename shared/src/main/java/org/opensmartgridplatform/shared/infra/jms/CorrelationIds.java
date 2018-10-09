@@ -1,12 +1,18 @@
 package org.opensmartgridplatform.shared.infra.jms;
 
+import org.opensmartgridplatform.shared.validation.Identification;
+
 /**
  * Set of ID's used to track things like device operations passing through the platform,
  * i.e. the organisation identification, the device identification and the correlation UID.
  */
 public class CorrelationIds {
+    @Identification
     private final String organisationIdentification;
+
+    @Identification
     private final String deviceIdentification;
+
     private final String correlationUid;
 
     public CorrelationIds(final String organisationIdentification, final String deviceIdentification,
