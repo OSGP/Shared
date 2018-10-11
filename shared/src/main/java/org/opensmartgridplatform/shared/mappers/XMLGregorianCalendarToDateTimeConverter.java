@@ -13,7 +13,9 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.joda.time.Chronology;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +51,12 @@ public class XMLGregorianCalendarToDateTimeConverter extends BidirectionalConver
             return null;
         }
 
-        return new DateTime(source.toGregorianCalendar().getTime());
+        return new DateTime(source.toGregorianCalendar().getTime(), timeZoneOf(source));
+    }
+
+    private DateTimeZone timeZoneOf(XMLGregorianCalendar source) {
+        int offsetMinutes = source.getTimezone();
+        return DateTimeZone.forOffsetHoursMinutes(offsetMinutes / 60, offsetMinutes % 60);
     }
 
     @Override
