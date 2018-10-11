@@ -70,7 +70,7 @@ public class XMLGregorianCalendarToDateTimeConverterTest {
     @Test
     public void mapXMLGregorianCalenderToDateTime() {
         try {
-            final DateTime dateTime = DateTime.now();
+            final DateTime dateTime = DateTime.parse("2010-06-30T01:20:30+02:00");
             final XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(
                     dateTime.toGregorianCalendar());
 
