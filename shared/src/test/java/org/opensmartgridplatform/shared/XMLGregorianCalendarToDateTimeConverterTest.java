@@ -7,10 +7,13 @@
  */
 package org.opensmartgridplatform.shared;
 
+import java.util.GregorianCalendar;
+
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
@@ -18,7 +21,10 @@ import ma.glasnost.orika.converter.BidirectionalConverter;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import ma.glasnost.orika.metadata.Type;
 
+import org.joda.time.Chronology;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.chrono.ISOChronology;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,18 +74,25 @@ public class XMLGregorianCalendarToDateTimeConverterTest {
     }
 
     @Test
-    public void mapXMLGregorianCalenderToDateTime() {
-        try {
-            final DateTime dateTime = DateTime.parse("2010-06-30T01:20:30+02:00");
-            final XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-                    dateTime.toGregorianCalendar());
+    public void mapXMLGregorianCalenderWithTimeZoneToDateTime() {
+            String withTimeZone = "2010-06-30T01:20:30+02:00";
+            final DateTime dateTime = DateTime.parse(withTimeZone);
+            final XMLGregorianCalendar xmlGregorianCalendar = XMLGregorianCalendarImpl.parse(withTimeZone);
 
             // Try to map to Yoda version.
             final DateTime mappedYodaDateTime = this.mapper.map(xmlGregorianCalendar, DateTime.class);
             Assert.assertEquals(dateTime, mappedYodaDateTime);
-        } catch (final DatatypeConfigurationException e) {
-            Assert.fail(e.getMessage());
-        }
+    }
+
+    @Test
+    public void mapXMLGregorianWithoutTimeZoneCalenderToDateTime() {
+        String withoutTimeZone = "2010-06-30T01:20:30";
+        final DateTime dateTime = DateTime.parse(withoutTimeZone);
+        final XMLGregorianCalendar xmlGregorianCalendar = XMLGregorianCalendarImpl.parse(withoutTimeZone);
+
+        // Try to map to Yoda version.
+        final DateTime mappedYodaDateTime = this.mapper.map(xmlGregorianCalendar, DateTime.class);
+        Assert.assertEquals(dateTime, mappedYodaDateTime);
     }
 
     @Test
