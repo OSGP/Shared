@@ -52,15 +52,15 @@ public class XMLGregorianCalendarToDateTimeConverter extends BidirectionalConver
             return null;
         }
 
-        DateTimeZone timeZone = timeZoneOf(source);
+        final DateTimeZone timeZone = this.timeZoneOf(source);
         if (timeZone == null) {
             return new DateTime(source.toGregorianCalendar().getTime(), ISOChronology.getInstance());
         }
         return new DateTime(source.toGregorianCalendar().getTime(), timeZone);
     }
 
-    private DateTimeZone timeZoneOf(XMLGregorianCalendar source) {
-        int offsetMinutes = source.getTimezone();
+    private DateTimeZone timeZoneOf(final XMLGregorianCalendar source) {
+        final int offsetMinutes = source.getTimezone();
         if (offsetMinutes == DatatypeConstants.FIELD_UNDEFINED) {
             return null;
         }
@@ -70,7 +70,7 @@ public class XMLGregorianCalendarToDateTimeConverter extends BidirectionalConver
     @Override
     public boolean canConvert(final Type<?> sourceType, final Type<?> destinationType) {
         // The check 'this.sourceType.isAssignableFrom(sourceType)' fails for
-        // org.yoda.DateTime.class.
+        // org.joda.DateTime.class.
         // Use custom check instead.
         return Objects.equals(sourceType.getRawType().getName(), DateTime.class.getName())
                 && Objects.equals(destinationType.getRawType().getName(), XMLGregorianCalendar.class.getName())
