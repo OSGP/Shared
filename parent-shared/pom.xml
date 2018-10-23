@@ -14,7 +14,7 @@
 
   <artifactId>parent-shared</artifactId>
   <groupId>org.opensmartgridplatform</groupId>
-  <version>4.30.0</version>
+  <version>4.31.0</version>
   <packaging>pom</packaging>
   <name>parent-shared</name>
   <!-- Description, Organization, Licences, URL and Distribution Management 
@@ -46,7 +46,7 @@
 
   <properties>
     <module.baseUri>${project.baseUri}/../</module.baseUri>
-    <osgp.version>4.30.0</osgp.version>
+    <osgp.version>4.31.0</osgp.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <spring.version>4.3.5.RELEASE</spring.version>
@@ -81,6 +81,7 @@
     <license.maven.plugin>2.11</license.maven.plugin>
     <quartz.version>2.3.0</quartz.version>
     <hikaricp.version>2.6.0</hikaricp.version>
+    <micrometer.version>1.0.6</micrometer.version>
   </properties>
 
   <repositories>
@@ -392,6 +393,18 @@
         <groupId>org.quartz-scheduler</groupId>
         <artifactId>quartz</artifactId>
         <version>${quartz.version}</version>
+      </dependency>
+
+      <!-- Micrometer -->
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-core</artifactId>
+        <version>${micrometer.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-registry-prometheus</artifactId>
+        <version>${micrometer.version}</version>
       </dependency>
 
     </dependencies>

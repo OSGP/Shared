@@ -1,17 +1,13 @@
 /**
- * Copyright 2015 Smart Society Services B.V.
+ * Copyright 2018 Smart Society Services B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-package org.opensmartgridplatform.dto.valueobjects;
+package org.opensmartgridplatform.shared.infra.jms;
 
-/**
- * @deprecated Use org.opensmartgridplatform.shared.infra.jms.MessageType instead.
- */
-@Deprecated
-public enum DeviceFunctionDto {
+public enum MessageType {
     START_SELF_TEST,
     STOP_SELF_TEST,
     SET_LIGHT,
@@ -93,5 +89,5 @@ public enum DeviceFunctionDto {
     CLEAR_ALARM_REGISTER,
     GET_MBUS_ENCRYPTION_KEY_STATUS_BY_CHANNEL,
     SCAN_MBUS_CHANNELS,
-    UPDATE_DEVICE_CDMA_SETTINGS
+    UPDATE_DEVICE_CDMA_SETTINGS;
 }

@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.opensmartgridplatform</groupId>
     <artifactId>parent-shared</artifactId>
-    <version>4.30.0</version>
+    <version>4.31.0</version>
     <relativePath>../parent-shared/pom.xml</relativePath>
   </parent>
 
@@ -170,11 +170,21 @@
       <artifactId>quartz</artifactId>
     </dependency>
 
-    <!-- test deps -->
+    <!-- Junit -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
+    </dependency>
+
+    <!-- Micrometer -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
     </dependency>
   </dependencies>
 </project>
